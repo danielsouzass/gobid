@@ -6,11 +6,18 @@ import (
 )
 
 func (api *API) BindRoutes() {
-
 	api.Router.Use(middleware.RequestID, middleware.Recoverer, middleware.Logger, api.Sessions.LoadAndSave)
+
+	// csrfMiddleware := csrf.Protect(
+	// 	[]byte(os.Getenv("GOBID_CSRF_KEY")),
+	// 	csrf.Secure(false), // DEV ONLY
+	// )
+
+	// api.Router.Use(csrfMiddleware)
 
 	api.Router.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
+			// r.Get("/csrf_token", api.HandleGetCSRFToken)
 			r.Route("/users", func(r chi.Router) {
 				r.Post("/signup", api.handleSignupUser)
 				r.Post("/login", api.handleLoginUser)

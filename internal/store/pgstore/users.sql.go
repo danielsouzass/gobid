@@ -7,9 +7,9 @@ package pgstore
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createUser = `-- name: CreateUser :one
@@ -51,12 +51,12 @@ WHERE email = $1
 `
 
 type GetUserByEmailRow struct {
-	ID           uuid.UUID          `json:"id"`
-	UserName     string             `json:"user_name"`
-	Email        string             `json:"email"`
-	PasswordHash []byte             `json:"password_hash"`
-	CreatedAt    string             `json:"created_at"`
-	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+	ID           uuid.UUID `json:"id"`
+	UserName     string    `json:"user_name"`
+	Email        string    `json:"email"`
+	PasswordHash []byte    `json:"password_hash"`
+	CreatedAt    string    `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
@@ -87,12 +87,12 @@ WHERE id = $1
 `
 
 type GetUserByIDRow struct {
-	ID           uuid.UUID          `json:"id"`
-	UserName     string             `json:"user_name"`
-	Email        string             `json:"email"`
-	PasswordHash []byte             `json:"password_hash"`
-	CreatedAt    string             `json:"created_at"`
-	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
+	ID           uuid.UUID `json:"id"`
+	UserName     string    `json:"user_name"`
+	Email        string    `json:"email"`
+	PasswordHash []byte    `json:"password_hash"`
+	CreatedAt    string    `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 func (q *Queries) GetUserByID(ctx context.Context, id uuid.UUID) (GetUserByIDRow, error) {
